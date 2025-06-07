@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive PC Email Layout</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      height: 100vh;
+    }
+    .sidebar {
+      background-color: #f8f9fa;
+      height: 100%;
+    }
+    .email-list {
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+    }
+    .email-view {
+      background-color: #ffffff;
+      height: 100%;
+      padding: 1rem;
+    }
+    #composeModal .modal-dialog {
+      max-width: 600px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid h-100">
+    <div class="row h-100">
+
+      <!-- Sidebar -->
+      <div class="col-2 sidebar d-flex flex-column p-3">
+        <button class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#composeModal">Compose</button>
+        <button class="btn btn-outline-secondary mb-2">Inbox</button>
+        <button class="btn btn-outline-secondary mb-2">Sent Mail</button>
+        <button class="btn btn-outline-secondary mb-2">Drafts</button>
+        <button class="btn btn-outline-secondary mb-2">Trash</button>
+      </div>
+
+      <!-- Middle Column -->
+      <div class="col-2 d-flex flex-column p-3">
+        <input id="searchInput" type="text" class="form-control mb-3" placeholder="Search emails..." onkeyup="searchEmails()">
+        <div class="email-list" id="emailList">
+          <div class="card mb-2 email-item">
+            <div class="card-body">
+              <h6 class="card-title">Welcome to the App!</h6>
+              <p class="card-text">Thanks for signing up...</p>
+            </div>
+          </div>
+          <div class="card mb-2 email-item">
+            <div class="card-body">
+              <h6 class="card-title">Meeting Reminder</h6>
+              <p class="card-text">Meeting at 10AM tomorrow...</p>
+            </div>
+          </div>
+          <div class="card mb-2 email-item">
+            <div class="card-body">
+              <h6 class="card-title">Your Invoice</h6>
+              <p class="card-text">Here’s your receipt...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel -->
+      <div class="col-8 email-view">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4>Email Title: Welcome to the App!</h4>
+          <button class="btn btn-outline-dark">Profile</button>
+        </div>
+        <p>This is a sample email body. Welcome to your new inbox!</p>
+        <textarea class="form-control mt-3 mb-2" rows="4" placeholder="Write your reply here..."></textarea>
+        <button class="btn btn-success" onclick="sendReply()">Send</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Compose Modal -->
+  <div class="modal fade" id="composeModal" tabindex="-1" aria-labelledby="composeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="composeModalLabel">Compose Email</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control mb-2" placeholder="To:" />
+          <input type="text" class="form-control mb-2" placeholder="Subject:" />
+          <textarea class="form-control" rows="6" placeholder="Write your message..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="sendComposeMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function sendReply() {
+      alert("Message Sent!");
+    }
+
+    function sendComposeMessage() {
+      alert("Message Sent!");
+      const modal = bootstrap.Modal.getInstance(document.getElementById('composeModal'));
+      modal.hide();
+    }
+
+    function searchEmails() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const emails = document.querySelectorAll(".email-item");
+
+      emails.forEach(email => {
+        const text = email.innerText.toLowerCase();
+        email.style.display = text.includes(input) ? "block" : "none";
+      });
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
